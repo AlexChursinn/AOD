@@ -1,0 +1,180 @@
+//====================================================================================================
+.header {
+	position: absolute; /* Накладываю шапку по верх всего */
+	width: 100%; /* Накладываю шапку по верх всего */
+	z-index: 50; /* Накладываю шапку по верх всего */
+	left: 0;
+	top: 35px; /* отступ сверху от страницы */
+	@media (max-width:767px) {
+		top: 15px;
+	}
+}
+
+.header__row {
+	@include flexbox(); /* все элементы шапки по центру */
+	justify-content: center; /* все элементы шапки по центру */
+	align-items: center; /* все элементы шапки по центру */
+	height: 85px; /* высота шапки по лого */
+}
+
+.header__menu {
+
+}
+
+.header__logo {
+	position: absolute;
+	left: 50%;
+	top: 0;
+	z-index: 2;
+	@include tr(-50%,0px,0px); /* Миксин трансформ отьехал на 50% обратно влево (вся эта конструкция выстраивает по центру)*/
+}
+
+.menu {
+	@media (max-width:767px) { /* Первый брейкпоинт */
+		.menu__body {
+			position: fixed;
+			width: 100%;
+			height: 100%;
+			left: 0;
+			top: 0;
+			overflow: auto; /* Если вдруг меню будет больше чтобы можно было скролить внутри */
+			background-color: #4d4959;
+			padding: 150px 0px 20px 0px; /* Опустил меню вниз */
+			@include tr(0px,-100%,0px); /* Убираю меню вверх на 100% для БУРГЕРА */
+			@include anim(0.5s,0s); /* Анимация выпадения меню */
+			&.active {
+				@include tr(0px,0px,0px); /* Возвращаю меню БУРГЕРА */
+			}
+		}
+		.menu__list {
+			flex-direction: column; /* Развернул меню*/
+			justify-content: center; /* По центру */
+			align-items: center; /* По центру */
+			li {
+				padding: 0 0 45px 0; /* между разделами меню */
+
+				&:nth-child(2), 
+				&:nth-child(3) {
+					padding: 0 0 45px 0; /* между разделами меню */
+					&:after {
+						display: block; /* Вернул скрытую точку */
+					}
+				}
+				&:last-child {
+					padding: 0;
+				}
+				&:after { /* Создаю точки между меню списка */
+					width: 4px;
+					height: 4px;
+					background-color: #fff;
+					right: 50%;
+					top: 40px;
+					margin: 0px -2px 0px 0px;
+				}
+			}
+		}
+		.menu__link {
+			color: #fff; 
+			font-size: 24px; /* Стоит увеличивать шрифт в меню бургер так как на мобилке проще тыкнуть */
+		}
+	}
+}
+
+.menu__icon { /* Заготовка бургера снизу страницы */
+	@media (max-width:767px) {
+	display: block;
+		position: absolute;
+		top: 33px;
+		right: 15px;
+		width:30px;
+		height: 18px;
+		cursor: pointer;
+		z-index: 5;
+		span{@include anim(0.3s,0s);top: 8px;left: 0px;position: absolute;width: 100%;height: 2px;background-color: #4d4959;
+			&:first-child{top: 0px;}
+			&:last-child{top: auto;bottom: 0px;}
+		}
+		&.active{
+			span{@include scale(0); background-color: #fff;
+				&:first-child{@include rotate(-45deg);top: 8px;}
+				&:last-child{@include rotate(45deg);bottom: 8px;}
+			}
+		}
+	}
+}
+
+.icon-menu {
+	@media (max-width:767px) {
+
+	}
+}
+
+.menu__body {
+	
+}
+
+.menu__list {
+	@include flexbox();
+	li {
+		position: relative; /* для точки */
+		padding: 0px 37.5px;
+		&:nth-child(2){
+			padding: 0px 110px 0px 37.5px; /* Используем такую конструкцию для 3 и 4 списка меню чтобы развинуть их по макету от карнтики по разным сторонам */
+		}
+		&:nth-child(3){
+			padding: 0px 37.5px 0px 110px; /* Используем такую конструкцию для 3 и 4 списка меню чтобы развинуть их по макету от карнтики по разным сторонам */
+		}
+		&:after { /* Создаю точки между меню списка */
+			content: '';
+			width: 2px;
+			height: 2px;
+			background-color: #4d4959;
+			border-radius: 50%;
+			position: absolute;
+			right: 0;
+			top: 50%;
+			margin: -1.5px 0px 0px 0px;
+		}
+		&:nth-child(2), /* Убираю лишнии точки у второго и последнего элемента меню */
+		&:last-child {
+			&:after {
+				display: none;
+			}
+		}
+	}
+}
+
+.menu__link { /* Стили для списка меню */
+	color: #4d4959;
+	font-size: 13px;
+	text-transform: uppercase;
+	font-weight: 700;
+	letter-spacing: 2.6px;
+}
+
+//====================================================================================================
+
+/*
+	.header-menu__icon{
+		display: block;
+		position: absolute;
+		top: 18px;
+		right: 10px;
+		width:30px;
+		height: 18px;
+		cursor: pointer;
+		z-index: 5;
+		span{@include anim(0.3s,0s);top: 8px;left: 0px;position: absolute;width: 100%;height: 2px;background-color: #000;
+			&:first-child{top: 0px;}
+			&:last-child{top: auto;bottom: 0px;}
+		}
+		&.active{
+			span{@include scale(0);
+				&:first-child{@include rotate(-45deg);top: 8px;}
+				&:last-child{@include rotate(45deg);bottom: 8px;}
+			}
+		}
+	}
+*/
+
+/* 32:28 ПЕРВЫЙ БЛОК КОНЕЦ */
